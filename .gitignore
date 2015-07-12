@@ -10,3 +10,8 @@
 **/.uic
 Makefile
 *.o
+cscope.out
+cscope.in.out
+cscope.po.out
+tags
+moc_*.cpp
