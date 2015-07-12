@@ -1,0 +1,12 @@
+**/.generated
+**/.git
+**/.gyp
+**/.gyp_new
+**/.moc
+**/.obj
+**/.pch
+**/.rcc
+**/.ropeproject
+**/.uic
+Makefile
+*.o
