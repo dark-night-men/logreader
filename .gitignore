@@ -16,4 +16,4 @@ cscope.po.out
 tags
 moc_*.cpp
 gend
-logfile
+logreader
