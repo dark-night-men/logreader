@@ -1,15 +1,13 @@
 #ifndef MYMODEL_H
 #define MYMODEL_H
 
-//! [Quoting ModelView Tutorial]
-// mymodel.h
-#include <QAbstractListModel>
+#include <QAbstractTableModel>
 
 class LogFile;
-class MyModel : public QAbstractListModel
+class MyModel : public QAbstractTableModel
 {
 Q_OBJECT
-Q_PROPERTY(LogFile *logFile_ WRITE setLogFile )
+//Q_PROPERTY(LogFile *logFile_ WRITE setLogFile )
 
 public:
     MyModel(QObject *parent);
@@ -22,6 +20,5 @@ public:
 private:
     LogFile *logFile_ ;
 };
-//! [Quoting ModelView Tutorial]
 
 #endif // MYMODEL_H

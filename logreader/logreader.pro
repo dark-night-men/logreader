@@ -8,10 +8,12 @@ QT += widgets
 
 SOURCES += main.cpp \
            mymodel.cpp \
-           logfile.cpp
+           logfile.cpp \
+           ilogfile.cpp
 
 HEADERS += mymodel.h \
-           logfile.h
+           logfile.h \
+           ilogfile.h
 
 
 # install

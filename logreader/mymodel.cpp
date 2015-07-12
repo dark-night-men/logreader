@@ -4,7 +4,7 @@
 #include "logfile.h"
 
 MyModel::MyModel(QObject *parent)
-    :QAbstractListModel(parent)
+    :QAbstractTableModel(parent)
 {
 }
 
