@@ -10,10 +10,7 @@ Q_PROPERTY( QByteArray content_ READ content )
 Q_PROPERTY( QStringList stringList_ READ stringList )
 
 public:
-    LogFile(const QString & filename)
-        :QFile(filename)
-    {
-    }
+    LogFile(const QString & filename);
 
     const QByteArray & content() const { return content_; }
     void read();
@@ -22,7 +19,6 @@ public:
 
 private:
     QString fileName_;
-    QFile file_;
     QByteArray content_;
     QStringList stringList_;
 };

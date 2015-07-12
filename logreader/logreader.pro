@@ -1,4 +1,6 @@
-TARGET = loglogfile
+TARGET = logreader
+
+CONFIG += debug
 
 TEMPLATE = app
 

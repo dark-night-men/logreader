@@ -1,8 +1,17 @@
 #include "logfile.h"
+#include <QDebug>
+
+LogFile::LogFile(const QString & filename)
+    :QFile(filename)
+{
+    qDebug() << filename;
+}
+
 
 void LogFile::read()
 {
-    if (!file_.open(QIODevice::ReadOnly | QIODevice::Text))
+    qDebug() << fileName();
+    if (!open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
     //while (!file_.atEnd()) {
@@ -11,7 +20,7 @@ void LogFile::read()
     //}
     
 
-    content_ = file_.readAll();
+    content_ = readAll();
 }
 
 void LogFile::splitArray()

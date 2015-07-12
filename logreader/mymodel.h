@@ -3,10 +3,10 @@
 
 //! [Quoting ModelView Tutorial]
 // mymodel.h
-#include <QAbstractTableModel>
+#include <QAbstractListModel>
 
 class LogFile;
-class MyModel : public QAbstractTableModel
+class MyModel : public QAbstractListModel
 {
 Q_OBJECT
 Q_PROPERTY(LogFile *logFile_ WRITE setLogFile )
