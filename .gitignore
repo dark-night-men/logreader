@@ -16,3 +16,7 @@ cscope.po.out
 tags
 moc_*.cpp
 gend
+lib*.so
+lib*.so.*
+core
+core.*
