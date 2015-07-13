@@ -4,7 +4,8 @@
 #include <QtGui>
 
 typedef QList< QByteArray > RawContent;
-typedef QLinkedList< QString > StringList;
+//typedef QLinkedList< QString > StringList;
+typedef QStringList StringList;
 
 class ILogFile;
 class IReader : public QFile

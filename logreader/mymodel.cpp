@@ -1,16 +1,35 @@
 //! [Quoting ModelView Tutorial]
 // mymodel.cpp
 #include "mymodel.h"
-#include "logfile.h"
+#include "ilogfile.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 MyModel::MyModel(QObject *parent)
     :QAbstractTableModel(parent)
+     ,logFile_(0)
+     ,view_(0)
 {
+    QTimer* t = new QTimer(this);
+    t->setInterval(0);
+    connect(t,&QTimer::timeout,this,&MyModel::readData);
+    t->start();
 }
 
-int MyModel::rowCount(const QModelIndex & /*parent*/) const
+int MyModel::rowCount(const QModelIndex & parent) const
 {
-   return logFile_->stringList().size();
+    //if ( parent.isValid() ){
+    //    return 0;
+    //} else {
+
+    //    int listsize = logFile_->stringList().size();
+    //    qDebug() << "MyModel::rowCount started " << listsize;
+    //    return listsize;
+    //}
+
+    //return 100;
+    return rand() % 3 + 10 ;
 }
 
 int MyModel::columnCount(const QModelIndex & /*parent*/) const
@@ -24,7 +43,10 @@ QVariant MyModel::data(const QModelIndex &index, int role) const
     {
 
         if( index.column() == 0 ) {
-            return logFile_->stringList().at(index.row());
+            return logFile_->stringList()
+                .at(logFile_->stringList().size() % 3);
+            //qDebug() << "string list size " << logFile_->stringList().size() ;
+            //return "eeeeeeeeee";
 
         } else {
             return QString("Row%1, Column%2")
@@ -37,11 +59,17 @@ QVariant MyModel::data(const QModelIndex &index, int role) const
 
 void MyModel::readData()
 {
+
+    //qDebug() << "MyModel::readData started" ;
     if(!logFile_){
+        qDebug() << "MyModel::readData logfile_ is NULL" ;
         return;
     }
 
     logFile_->read();
     logFile_->splitArray();
+    //view_->scrollTo(index(rowCount(),0));
+    //view_->scrollToBottom();
+
 }
 //! [Quoting ModelView Tutorial]

@@ -10,31 +10,52 @@ IReader::IReader(const QString & filename, ILogFile* ilogFile )
     assert(ilogFile_);
 }
 
-void IReader::read( const QString & )
+void IReader::read( const QString & ppp )
 {
-    qDebug() << fileName();
+    qDebug() << "IReader::read started" << ppp;
     forever {
-        if (!open(QIODevice::ReadOnly | QIODevice::Text))
+        if (!open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open file";
             return;
+        }
 
-        seek(ilogFile_->currentPos_);
+        bool seekStatus = seek(ilogFile_->currentPos_);
+
         //while (!file_.atEnd()) {
         //    content_ = file_.readLine();
         //    //process_line(line);
         //}
 
+        QByteArray chunk(readAll());
 
-        ilogFile_->content_.append(readAll());
-        ilogFile_->currentPos_ = pos();
+        close();
 
-        quint64 totalSize ;
-        foreach( const QByteArray & a, ilogFile_->content_ ){ 
-            totalSize += a.size();
+        if ( chunk.size() > 0 ) {
+
+            qDebug() << "Chunk size " << chunk.size() 
+                << " seekPos : " << ilogFile_->currentPos_
+                << " seekStatus : " << seekStatus ;
+
+            ilogFile_->content_.append(chunk);
+            ilogFile_->currentPos_ += chunk.size();
+        } else {
+            continue;
         }
 
-        if (totalSize > 10000) {
+        //qDebug() << "current pos : " << pos() ; 
+
+        quint64 totalSize(0) ;
+        int kkk=0;
+        foreach( const QByteArray & a, ilogFile_->content_ ){ 
+            //qDebug() << "total size" << totalSize << "  " << kkk ;
+            totalSize += a.size();
+            ++kkk;
+        }
+
+        if (totalSize > 1000) {
             emit resultReady("qqqq");
-            break ;
+            //break ;
+            return ;
         }
     }
 }
@@ -54,6 +75,7 @@ ILogFile::ILogFile(const QString & filename)
     connect(this, &ILogFile::operate, reader_, &IReader::read);
     connect(reader_, &IReader::resultReady, this, &ILogFile::handleResults);
     readerThread_.start();
+    read();
 }
 
 ILogFile::~ILogFile() {
@@ -77,8 +99,11 @@ void ILogFile::splitArray()
     for( quint64 i=toSplit_ ; i<content_.size() ; ++i ){
         foreach( const QString & s , content_.at(i).split('\n') ) {
             stringList_ << s ; 
+            qDebug() << "split string  --- " << s ;
         }
     }
+    toSplit_ = content_.size() ;
+
 
     /*
     quint64 lastLine(stringList_.size()-1);
