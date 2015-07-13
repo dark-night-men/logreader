@@ -1,0 +1,27 @@
+#!/bin/bash
+
+grep qwert debug.log | c++filt | while  read x; do
+
+##get address with braces
+    if ELADRESS=$(printf "%s\n" "$x"|egrep -o '\[[^]]*\]$' ) ; then
+
+        EXENAME=$(printf "%s\n" "$x"|sed -r 's:^[^/]*(/[^(]*)\(.*$:\1:' )
+        #echo $EXENAME
+
+        LADRESS=${ELADRESS#[}
+        LADRESS=${LADRESS%]}
+        #echo $LADRESS
+
+        if LINEINCODE=$(addr2line -e $EXENAME $LADRESS) ; then
+            #echo $LINEINCODE
+            FLINECODE="${LINEINCODE##*/}"
+            #echo $FLINECODE
+        fi
+
+        printf "%s\n" "$x" | sed -re 's:/.*/::' -e "s|[^^]\[.*\]$|$FLINECODE|"
+    else
+
+        printf "%s\n" "$x" 
+    fi
+done
+
