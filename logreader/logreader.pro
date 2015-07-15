@@ -17,6 +17,9 @@ HEADERS += mymodel.h \
            ilogfile.h \
            myview.h
 
+LIBS += -ldebugprint -L../debugprint
+INCLUDEPATH += ../debugprint
+
 # install
 #target.path = $$[QT_INSTALL_EXAMPLES]/widgets/tutorials/modelview/1_readonly
 #INSTALLS += target

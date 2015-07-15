@@ -2,6 +2,7 @@
 // mymodel.cpp
 #include "mymodel.h"
 #include "ilogfile.h"
+#include "../debugprint/debugprint.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,6 +30,7 @@ int MyModel::rowCount(const QModelIndex & parent) const
     //}
 
     //return 100;
+    printStack(99);
     return rand() % 3 + 10 ;
 }
 

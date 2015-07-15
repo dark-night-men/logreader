@@ -1,6 +1,7 @@
 #!/bin/bash
 
-grep qwert debug.log | c++filt | while  read x; do
+#grep qwert debug.log | c++filt | while  read x; do
+cat debug.log | c++filt | while  read x; do
 
 ##get address with braces
     if ELADRESS=$(printf "%s\n" "$x"|egrep -o '\[[^]]*\]$' ) ; then
