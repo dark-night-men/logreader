@@ -4,6 +4,7 @@
 #include "dbgprint_export.h"
 #include <QObject>
 
+DBGPRINT_EXPORT void logprint( const QString & s);
 DBGPRINT_EXPORT QStringList stackTrace( int k ) ;
 DBGPRINT_EXPORT void printStack( const QStringList & sl ) ;
 DBGPRINT_EXPORT void printStack( int x ) ;

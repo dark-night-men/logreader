@@ -20,14 +20,20 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
-    void setLogFile(ILogFile * logFile) {logFile_ = logFile;}
+    void setLogFile(ILogFile * logFile); 
     void setView(QTableView* view) {view_ = view;}
+
+    bool insertRows(int position, int rows, const QModelIndex &index);
 
 public slots:
     void readData();
 private:
+    void chunkReaded( int chunkSize);
+
+private:
     ILogFile *logFile_ ;
     QTableView* view_;
+    quint64 tableSize_;
 };
 
 #endif // MYMODEL_H
