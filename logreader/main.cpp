@@ -18,15 +18,39 @@ int main(int argc, char *argv[])
     //    return 1;
     //QString fileName = QFileInfo(files).fileName();
 
+    QMainWindow mainWindow;
+    QWidget *mainWidget = new QWidget( &mainWindow );
+    mainWindow.setCentralWidget(mainWidget);
+    QVBoxLayout *layout = new QVBoxLayout( mainWidget );
 
-    MyView tableView;
+    QPushButton *options = new QPushButton( "options");
+    QHBoxLayout *optionsLayout = new QHBoxLayout;
+    optionsLayout->addStretch();
+    optionsLayout->addWidget(options);
+
+    layout->addLayout(optionsLayout);
+
+    MyView *tableView=new MyView;
+    layout->addWidget(tableView);
+
+    QLineEdit *findField = new QLineEdit;
+    QHBoxLayout *layoutFind = new QHBoxLayout;
+    layoutFind->addWidget(new QLabel("Find"));
+    layoutFind->addWidget(findField);
+    layout->addLayout(layoutFind);
+
+    //mainWindow.setCentralWidget(tableView);
+
+
     MyModel myModel(0);
-    myModel.setView(&tableView);
+    myModel.setView(tableView);
     ILogFile logFile("./autogen.log");
     //LogFile logFile(fileName);
     myModel.setLogFile(&logFile);
     //myModel.readData();
-    tableView.setModel( &myModel );
-    tableView.show();
+    tableView->setModel( &myModel );
+    //tableView->show();
+    mainWindow.show();
+
     return a.exec();
 }
