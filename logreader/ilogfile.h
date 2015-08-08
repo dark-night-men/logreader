@@ -42,6 +42,8 @@ public:
 
 public slots:
     void handleResults(const QString &);
+    //search string for regex
+    quint64 find( const QString & pattern);
 
 signals:
     void operate(const QString &);

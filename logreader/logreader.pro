@@ -10,12 +10,14 @@ SOURCES += main.cpp \
            mymodel.cpp \
            logfile.cpp \
            ilogfile.cpp \
-           myview.cpp
+           myview.cpp \
+           mainwidget.cpp
 
 HEADERS += mymodel.h \
            logfile.h \
            ilogfile.h \
-           myview.h
+           myview.h \
+           mainwidget.h
 
 LIBS += -ldebugprint -L../debugprint
 INCLUDEPATH += ../debugprint

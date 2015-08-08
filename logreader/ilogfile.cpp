@@ -1,7 +1,9 @@
+#include "../debugprint/debugprint.h"
 #include "ilogfile.h"
 #include <QDebug>
 #include <assert.h>
 
+#include <regex.h>        
 
 IReader::IReader(const QString & filename, ILogFile* ilogFile )
     :QFile(filename)
@@ -113,3 +115,39 @@ void ILogFile::splitArray()
     */
 }
 
+
+quint64 ILogFile::find( const QString & pattern)
+{
+    logprint(QString("ILogFile::find %1").arg(pattern));
+
+    regex_t regex;
+    int reti;
+    char msgbuf[100];
+
+    /* Compile regular expression */
+    reti = regcomp(&regex, "^a[[:alnum:]]", 0);
+    if (reti) {
+        fprintf(stderr, "Could not compile regex\n");
+        exit(1);
+    }
+
+    /* Execute regular expression */
+    reti = regexec(&regex, "abc", 0, NULL, 0);
+    if (!reti) {
+        puts("Match");
+        logprint(QString("ILogFile::find MATCH"));
+    }
+    else if (reti == REG_NOMATCH) {
+        puts("No match");
+        logprint(QString("ILogFile::find NO MATCH"));
+    }
+    else {
+        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+        fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+        exit(1);
+    }
+
+    /* Free compiled regular expression if you want to use the regex_t again */
+    regfree(&regex);
+
+}
