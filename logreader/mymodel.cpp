@@ -32,7 +32,7 @@ int MyModel::rowCount(const QModelIndex & parent) const
         //int listsize = logFile_->stringList().size();
         //qDebug() << "MyModel::rowCount started " << listsize;
         //return listsize;
-        logprint(QString("MyModel::rowCount %1").arg(tableSize_));
+        //logprint(QString("MyModel::rowCount %1").arg(tableSize_));
         return tableSize_;
     }
 
